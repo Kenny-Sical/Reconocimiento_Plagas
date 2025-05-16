@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'pages/home_page.dart';
+import 'pages/prediccion_page.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -16,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const HomePage(),
+      home: PrediccionPage(),
     );
   }
 }
