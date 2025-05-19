@@ -6,21 +6,16 @@ import 'package:image/image.dart' as img;
 
 // Diccionario de traducciones
 const Map<String, String> traducciones = {
-  'Pepper__bell___Bacterial_spot': 'Pimiento morrón con mancha bacteriana',
-  'Pepper__bell___healthy': 'Pimiento morrón sano',
-  'Potato___Early_blight': 'Papa con tizón temprano',
-  'Potato___Late_blight': 'Papa con tizón tardío',
-  'Potato___healthy': 'Papa sana',
-  'Tomato_Bacterial_spot': 'Tomate con mancha bacteriana',
-  'Tomato_Early_blight': 'Tomate con tizón temprano',
-  'Tomato_Late_blight': 'Tomate con tizón tardío',
-  'Tomato_Leaf_Mold': 'Tomate con moho en la hoja',
-  'Tomato_Septoria_leaf_spot': 'Tomate con mancha de Septoria',
-  'Tomato_Spider_mites_Two_spotted_spider_mite': 'Tomate con ácaros',
-  'Tomato__Target_Spot': 'Tomate con mancha diana',
-  'Tomato__Tomato_YellowLeaf__Curl_Virus': 'Tomate con virus del rizado amarillo',
-  'Tomato__Tomato_mosaic_virus': 'Tomate con virus del mosaico',
-  'Tomato_healthy': 'Tomate sano',
+  "healthy": "Hoja sana",
+  "early_blight": "Tizón temprano",
+  "late_blight": "Tizón tardío",
+  "bacterial_spot": "Mancha bacteriana",
+  "mosaic_virus": "Virus mosaico",
+  "yellowleaf_curl_virus": "Virus de enrollamiento y amarilleo",
+  "leaf_mold": "Moho de la hoja",
+  "septoria_leaf_spot": "Mancha foliar de Septoria",
+  "spider_mites": "Ácaros (araña roja)",
+  "target_spot": "Mancha de diana",
 };
 
 class PrediccionPage extends StatefulWidget {
@@ -43,7 +38,7 @@ class _PrediccionPageState extends State<PrediccionPage> {
   }
 
   Future<void> loadModelAndLabels() async {
-    _interpreter = await Interpreter.fromAsset('assets/models/modelo_transfer.tflite');
+    _interpreter = await Interpreter.fromAsset('assets/models/modelo_general.tflite');
     // Cargar labels usando DefaultAssetBundle y contexto
     String rawLabels = await DefaultAssetBundle.of(context).loadString('assets/models/labels.txt');
     setState(() {
@@ -87,7 +82,9 @@ class _PrediccionPageState extends State<PrediccionPage> {
       }
     }
 
-    String etiquetaOriginal = _labels![maxIndex].trim();
+    String etiquetaOriginal = (_labels != null && _labels!.isNotEmpty)
+        ? _labels![maxIndex].trim()
+        : "desconocido";
     String etiquetaTraducida = traducciones[etiquetaOriginal] ?? etiquetaOriginal;
 
     setState(() {
